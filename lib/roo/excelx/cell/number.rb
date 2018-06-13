@@ -21,7 +21,12 @@ module Roo
           when /\.0/
             Float(number)
           else
-            (number.include?('.') || (/\A[-+]?\d+E[-+]\d+\z/i =~ number)) ? Float(number) : Integer(number)
+            if (number.include?('.') || (/\A[-+]?\d+E[-+]\d+\z/i =~ number))
+              number += '0' if number[number.length-1] == '.'
+              Float number
+            else
+              Integer number
+            end
           end
         end
 
